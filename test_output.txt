@@ -1,0 +1,96 @@
+======================================================================
+DOC-QUERY (LangGraph Document Q&A Agent) - AUTOMATED TEST RUN
+Run name      : run4
+Date          : 2026-10-29 04:28:51
+Test document : wikipedia_test_document.pdf (30 pages, 4 topics)
+  Topics      : Solar System (p.1-8), Photosynthesis (p.9-15),
+                Internet (p.16-22), Mount Everest (p.23-30)
+  Content     : fetched from en.wikipedia.org
+LLM backend   : local OpenAI-compatible proxy (model: glm-4-plus)
+======================================================================
+
+[scripted stdin] '/home/z/my-project/test-run/wikipedia_test_document.pdf'
+[scripted stdin] What is the largest planet in the Solar System?
+[scripted stdin] What is the main pigment that plants use to absorb light during photosynthesis?
+[scripted stdin] What was the precursor network that eventually became the Internet called?
+[scripted stdin] How tall is Mount Everest above sea level?
+[scripted stdin] Who wrote the play Hamlet?
+[scripted stdin] exit
+
+-------------------- PROGRAM OUTPUT START --------------------
+==============================================================
+          DOC-QUERY  (LangGraph Document Q&A Agent)
+==============================================================
+
+Enter path of your file (PDF / DOCX / TXT): 
+Processing your document (nodes 1 -> 3), please wait...
+
+[NODE 1] Preprocessing the input file...
+[NODE 1] File is a valid .pdf file. Accepted.
+
+[NODE 2] Extracting text from the file...
+[NODE 2] Extracted 30 page(s). Full text saved to extracted_text.txt
+
+[NODE 3] Summarizing the document with LLM (parallel calls)...
+[NODE 3] Total 30 chunk(s) prepared. Sending to LLM in parallel...
+[NODE 3] Done! Page-wise summary points saved to summaries.csv
+
+Document ready! (30 page(s) processed)
+Page-wise summary points stored in summaries.csv
+
+Now you can ask questions about the document.
+Type 'exit' or 'quit' to stop.
+
+Your question: 
+[NODE 4] Looking for the answer...
+[NODE 4] Page 5 looks most relevant. Reading the full page...
+[NODE 4] Answer ready.
+
+--------------------------------------------------------------
+ANSWER (found on page 5):
+--------------------------------------------------------------
+Jupiter is the largest planet in the Solar System.
+
+Your question: 
+[NODE 4] Looking for the answer...
+[NODE 4] Page 13 looks most relevant. Reading the full page...
+[NODE 4] Answer ready.
+
+--------------------------------------------------------------
+ANSWER (found on page 13):
+--------------------------------------------------------------
+Chlorophyll.
+
+Your question: 
+[NODE 4] Looking for the answer...
+[NODE 4] Page 18 looks most relevant. Reading the full page...
+[NODE 4] Answer ready.
+
+--------------------------------------------------------------
+ANSWER (found on page 18):
+--------------------------------------------------------------
+ARPANET.
+
+Your question: 
+[NODE 4] Looking for the answer...
+[NODE 4] Page 28 looks most relevant. Reading the full page...
+[NODE 4] Answer ready.
+
+--------------------------------------------------------------
+ANSWER (found on page 28):
+--------------------------------------------------------------
+8,848.86 metres (29,031.7 ft)
+
+Your question: 
+[NODE 4] Looking for the answer...
+[NODE 4] No page matched the question.
+
+--------------------------------------------------------------
+ANSWER (found on page ?):
+--------------------------------------------------------------
+This question does not seem to be related to this document.
+
+Your question: Bye bye!
+
+-------------------- PROGRAM OUTPUT END --------------------
+[exit code: 0] [elapsed: 972.3s]
