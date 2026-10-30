@@ -1,6 +1,7 @@
 
 import csv
 import os
+import re
 from concurrent.futures import ThreadPoolExecutor
 from typing import TypedDict
 
@@ -222,15 +223,19 @@ def answer_node(state: GraphState) -> dict:
     pick_prompt = (
         "You are given the summary points of every page of a document.\n"
         "Based on the question, decide which ONE page most likely contains the answer.\n"
-        "Reply with ONLY the page number (for example: 3).\n"
-        "If no page is related to the question at all, reply with only 0.\n\n"
+        "Reply with ONLY the page number (for example: 3) and nothing else.\n"
+        "Prefer picking the most likely page over saying 0 - the summaries are short,\n"
+        "so details can be missing from them. Reply with only 0 when the question is\n"
+        "clearly about a completely different topic than the whole document.\n\n"
         f"SUMMARY POINTS:\n{summary_text}\n"
         f"QUESTION: {question}"
     )
     try:
         reply = ask_llm(pick_prompt).strip()
-        digits = "".join(ch for ch in reply if ch.isdigit())
-        page_num = int(digits) if digits else 0
+        # take the FIRST number in the reply - joining all digits would turn
+        # something like "page 2 of 30" into 230
+        match = re.search(r"\d+", reply)
+        page_num = int(match.group()) if match else 0
     except Exception as e:
         print(f"[NODE 4] Could not figure out the best page -> {e}")
         return {"answer": "Sorry, I could not figure out which page has the answer."}

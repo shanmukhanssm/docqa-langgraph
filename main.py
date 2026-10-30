@@ -3,6 +3,7 @@ import os
 import sys
 
 from graph import build_graph
+from llm import API_KEY
 
 
 def main():
@@ -10,11 +11,12 @@ def main():
     print("          DOC-QUERY  (LangGraph Document Q&A Agent)")
     print("=" * 62)
 
-    # basic check before starting - is the API key set or not
-    if not os.getenv("API_KEY"):
-        print("\n[ERROR] API_KEY environment variable is not set!")
-        print("Get a free key from https://console.groq.com/keys and then run:")
-        print('   export API_KEY="your_key"        (windows: set API_KEY=your_key)')
+    # basic check before starting - make sure we have an API key
+    # (the key is hardcoded in llm.py; the env var API_KEY can override it)
+    if not API_KEY or API_KEY == "not_set_yet":
+        print("\n[ERROR] No API key configured!")
+        print("Set your key in llm.py (API_KEY) or via the environment:")
+        print('   export API_KEY="your_key"        (windows: $env:API_KEY="your_key")')
         sys.exit(1)
 
     app = build_graph()

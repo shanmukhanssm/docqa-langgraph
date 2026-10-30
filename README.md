@@ -55,26 +55,26 @@ docqa-langgraph/
 
 ```bash
 pip install -r requirements.txt
-```
-
-The LLM is accessed through any **OpenAI-compatible API**. By default the
-project targets **Groq** (`llama-3.3-70b-versatile`), so all you need is a
-free Groq key:
-
-```bash
-export API_KEY="your_groq_key"          # windows: set API_KEY=your_groq_key
 python main.py
 ```
 
-All three connection settings can be overridden with environment variables,
-so you can point the agent at any OpenAI-compatible endpoint (Groq, OpenAI,
-a local server, ...):
+No extra configuration is needed: the LLM credentials are **already
+hardcoded** in `llm.py` (API key, model `qwen/qwen3.8-omni-flash:free`, and
+base URL `https://api.xkiro.com/v1`), so the program runs out of the box.
+
+All three connection settings can still be overridden with environment
+variables, so you can point the agent at any OpenAI-compatible endpoint
+(Groq, OpenAI, a local server, ...) without touching the code:
 
 | Variable      | Default                          | Purpose                     |
 |---------------|----------------------------------|-----------------------------|
-| `API_KEY`     | – (required)                     | API key for the LLM service |
-| `MODEL_NAME`  | `llama-3.3-70b-versatile`        | Model id                    |
-| `BASE_URL`    | `https://api.groq.com/openai/v1` | OpenAI-compatible base URL  |
+| `API_KEY`     | *(hardcoded in `llm.py`)*        | API key for the LLM service |
+| `MODEL_NAME`  | `qwen/qwen3.8-omni-flash:free`   | Model id                    |
+| `BASE_URL`    | `https://api.xkiro.com/v1`       | OpenAI-compatible base URL  |
+
+> **Security note:** the API key is committed to this repository on purpose
+> (academic submission). If you fork or reuse this project, replace it with
+> your own key and keep it out of version control in production.
 
 ## Usage
 
@@ -124,4 +124,5 @@ Groq or any other provider in real use.
 
 - Python 3.10+
 - `langgraph`, `openai`, `pypdf`, `python-docx` (see `requirements.txt`)
-- An API key from [groq.com](https://console.groq.com/keys) (free) or any other OpenAI-compatible service
+- An LLM behind an OpenAI-compatible API - the key in `llm.py` is ready to use,
+  or grab a free one from [groq.com](https://console.groq.com/keys)
